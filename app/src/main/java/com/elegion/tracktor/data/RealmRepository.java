@@ -1,10 +1,13 @@
 package com.elegion.tracktor.data;
 
+import com.elegion.tracktor.App;
 import com.elegion.tracktor.data.model.Track;
 
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+
+import javax.inject.Inject;
 
 import io.realm.Realm;
 
@@ -16,8 +19,9 @@ public class RealmRepository implements IRepository<Track> {
     private Realm mRealm;
 
     private static AtomicLong sPrimaryId;
-
-    public RealmRepository() {
+    @Inject
+    public RealmRepository(App context) {
+        Realm.init(context);
         mRealm = Realm.getDefaultInstance();
         Number max = mRealm.where(Track.class).max("id");
         sPrimaryId = max == null ? new AtomicLong(0) : new AtomicLong(max.longValue());

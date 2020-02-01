@@ -1,5 +1,6 @@
 package com.elegion.tracktor.ui.results;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -17,14 +18,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.elegion.tracktor.App;
 import com.elegion.tracktor.R;
 import com.elegion.tracktor.data.RealmRepository;
 import com.elegion.tracktor.data.model.Track;
+import com.elegion.tracktor.di.ViewModelModule;
+import com.elegion.tracktor.ui.map.CounterFragment;
 import com.elegion.tracktor.util.ScreenshotMaker;
 import com.elegion.tracktor.util.StringUtil;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import toothpick.Scope;
+import toothpick.Toothpick;
 
 import static com.elegion.tracktor.ui.results.ResultsActivity.RESULT_ID;
 
@@ -41,7 +49,8 @@ public class ResultsDetailsFragment extends Fragment {
     ImageView mScreenshotImage;
 
     private Bitmap mImage;
-    private RealmRepository mRealmRepository;
+    @Inject
+    ResultsViewModel mResultsViewModel;
     private long mTrackId;
 
     public static ResultsDetailsFragment newInstance(long trackId) {
@@ -50,6 +59,13 @@ public class ResultsDetailsFragment extends Fragment {
         ResultsDetailsFragment fragment = new ResultsDetailsFragment();
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Scope scope = Toothpick.openScope(ResultsDetailsFragment.class).installModules(new ViewModelModule(this));
+        Toothpick.inject(this, scope);
     }
 
     @Nullable
@@ -67,17 +83,14 @@ public class ResultsDetailsFragment extends Fragment {
         mTrackId = getArguments().getLong(RESULT_ID, 0);
 
         //temporary
-        mRealmRepository = new RealmRepository();
-        Track track = mRealmRepository.getItem(mTrackId);
+        mResultsViewModel.updateTrack(mTrackId);
 
-        String distance = StringUtil.getDistanceText(track.getDistance());
-        String time = StringUtil.getTimeText(track.getDuration());
-
-        mTimeText.setText(time);
-        mDistanceText.setText(distance);
-
-        mImage = ScreenshotMaker.fromBase64(track.getImageBase64());
-        mScreenshotImage.setImageBitmap(mImage);
+        mResultsViewModel.getDistance().observe(this, distance -> mDistanceText.setText(distance));
+        mResultsViewModel.getTime().observe(this, time -> mTimeText.setText(time));
+        mResultsViewModel.getImageBase64().observe(this,imageBase64 -> {
+            mImage = ScreenshotMaker.fromBase64(imageBase64);
+            mScreenshotImage.setImageBitmap(mImage);
+        });
     }
 
     @Override
@@ -99,7 +112,7 @@ public class ResultsDetailsFragment extends Fragment {
             startActivity(Intent.createChooser(intent, "Результаты маршрута"));
             return true;
         } else if (item.getItemId() == R.id.actionDelete) {
-            if (mRealmRepository.deleteItem(mTrackId)) {
+            if (mResultsViewModel.deleteItem(mTrackId)) {
                 getActivity().onBackPressed();
             }
             return true;

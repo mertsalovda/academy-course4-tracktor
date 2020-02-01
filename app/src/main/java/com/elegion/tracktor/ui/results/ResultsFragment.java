@@ -1,6 +1,5 @@
 package com.elegion.tracktor.ui.results;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,12 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.elegion.tracktor.App;
 import com.elegion.tracktor.R;
-import com.elegion.tracktor.data.RealmRepository;
-import com.elegion.tracktor.util.CustomViewModelFactory;
+import com.elegion.tracktor.di.ViewModelModule;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import toothpick.Scope;
+import toothpick.Toothpick;
 
 public class ResultsFragment extends Fragment {
 
@@ -25,7 +28,8 @@ public class ResultsFragment extends Fragment {
     RecyclerView mRecyclerView;
 
     private OnItemClickListener mListener;
-    private ResultsViewModel mResultsViewModel;
+    @Inject
+    ResultsViewModel mResultsViewModel;
     private ResultsAdapter mResultsAdapter;
 
     public ResultsFragment() {
@@ -38,6 +42,7 @@ public class ResultsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Toothpick.inject(this, App.getAppScope());
         if (context instanceof OnItemClickListener) {
             mListener = (OnItemClickListener) context;
         } else {
@@ -49,8 +54,8 @@ public class ResultsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CustomViewModelFactory factory = new CustomViewModelFactory(new RealmRepository());
-        mResultsViewModel = ViewModelProviders.of(this, factory).get(ResultsViewModel.class);
+        Scope scope = Toothpick.openScope(ResultsFragment.class).installModules(new ViewModelModule(this));
+        Toothpick.inject(this, scope);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.elegion.tracktor.ui.map;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.elegion.tracktor.App;
 import com.elegion.tracktor.data.RealmRepository;
 import com.elegion.tracktor.event.AddPositionToRouteEvent;
 import com.elegion.tracktor.event.UpdateRouteEvent;
@@ -12,6 +13,10 @@ import com.elegion.tracktor.util.StringUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import javax.inject.Inject;
+
+import toothpick.Toothpick;
 
 public class MainViewModel extends ViewModel {
 
@@ -24,13 +29,15 @@ public class MainViewModel extends ViewModel {
     private long mDurationRaw;
     private double mDistanceRaw;
 
-    private RealmRepository mRealmRepository;
+    @Inject
+    RealmRepository mRealmRepository;
 
+    @Inject
     public MainViewModel() {
+        Toothpick.inject(this, App.getAppScope());
         EventBus.getDefault().register(this);
         startEnabled.setValue(true);
         stopEnabled.setValue(false);
-        mRealmRepository = new RealmRepository();
     }
 
     public void switchButtons() {

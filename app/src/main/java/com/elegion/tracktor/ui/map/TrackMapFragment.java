@@ -1,7 +1,6 @@
 package com.elegion.tracktor.ui.map;
 
 import android.Manifest;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.elegion.tracktor.R;
+import com.elegion.tracktor.di.ViewModelModule;
 import com.elegion.tracktor.event.AddPositionToRouteEvent;
 import com.elegion.tracktor.event.GetRouteEvent;
 import com.elegion.tracktor.event.StartTrackEvent;
@@ -33,6 +33,11 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import toothpick.Scope;
+import toothpick.Toothpick;
+
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 /**
@@ -46,7 +51,8 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
 
     private GoogleMap mMap;
 
-    private MainViewModel mMainViewModel;
+    @Inject
+    MainViewModel mMainViewModel;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -56,7 +62,8 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
 
     public void configure() {
         getMapAsync(this);
-        mMainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        Scope scope = Toothpick.openScope(CounterFragment.class).installModules(new ViewModelModule(this));
+        Toothpick.inject(this, scope);
     }
 
     @Override
