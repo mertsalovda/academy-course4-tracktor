@@ -2,6 +2,7 @@
     <string name="app_name">Tracktor</string>
     <string name="timeLabel">Время:</string>
     <string name="distanceLabel">Расстояние:</string>
+    <string name="average_speed_label">Средняя скорость:</string>
     <string name="start">Старт</string>
     <string name="end">Конец</string>
     <string name="stop">Стоп</string>
@@ -21,13 +22,30 @@
     <string name="dialog_title_auto_shutdown">Выберите время автоотключения</string>
     <string name="title_user_weight">Вес пользователя</string>
     <string name="dialog_title_user_weight">Вес пользователя</string>
+    <string name="title_user_gender">Пол пользователя</string>
+    <string name="dialog_title_user_gender">Пол пользователя</string>
+
+    <string name="title_user_height">Рост пользователя</string>
+    <string name="dialog_title_user_height">Рост пользователя</string>
+    <string name="title_user_age">Возвраст пользователя</string>
+    <string name="dialog_title_user_age">Возвраст пользователя</string>
+
+
+    <string name="title_user_category">О пользователе</string>
+    <string name="title_tracktor_category">Приложение</string>
 
     <string name="pref_key_unit">unit</string>
     <string name="pref_key_shutdown">shutdown</string>
     <string name="pref_key_weight">weight</string>
+    <string name="pref_key_height">height</string>
+    <string name="pref_key_gender">gender</string>
+    <string name="pref_key_age">age</string>
     <string name="pref_default_value_unit">1</string>
     <string name="pref_default_value_shutdown">-1</string>
     <string name="pref_default_value_weight">60</string>
+    <string name="pref_default_value_height">170</string>
+    <string name="pref_default_value_age">18</string>
+    <string name="pref_default_value_gender">-1</string>
     <string name="btn_delete_result">Удалить</string>
 
     <string name="permissions_request_title">Внимание!</string>
@@ -35,4 +53,15 @@
     <string name="ok">Понятно</string>
     <string name="back_off">Приложение не может работать без доступа к местоположению</string>
     <string name="notify_info">Время: %s\nРасстояние: %s "</string>
+    <string name="calories_spent">Потрачено каллорий:</string>
+    <string name="action_type">Вид активности:</string>
+    <string name="dateLabel">Дата:</string>
+    <string name="comment">Комментарий</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_comment">Введите комментарий</string>
 </resources>

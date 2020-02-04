@@ -2,6 +2,7 @@ package com.elegion.tracktor.data;
 
 import com.elegion.tracktor.App;
 import com.elegion.tracktor.data.model.Track;
+import com.elegion.tracktor.util.MathUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -81,14 +82,10 @@ public class RealmRepository implements IRepository<Track> {
     public long createAndInsertTrackFrom(long duration, double distanse, String base64image) {
         Track track = new Track();
 
-//        mRealm.beginTransaction();
-//        Track track = mRealm.createObject(Track.class, sPrimaryId.incrementAndGet());
-        track.setDistance(distanse);
+        track.setDistance(MathUtils.round(distanse, 2));
         track.setDuration(duration);
         track.setImageBase64(base64image);
         track.setDate(new Date());
-//        mRealm.commitTransaction();
-//        return sPrimaryId.longValue();
 
         return insertItem(track);
 

@@ -25,4 +25,23 @@
         <item>3600</item>
     </string-array>
 
+    <string-array name="entries_list_preference_gender">
+        <item>   -   </item>
+        <item>мужчина</item>
+        <item>женщина</item>
+    </string-array>
+
+    <string-array name="entryvalues_list_preference_gender">
+        <item>-1</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="action_type">
+        <item>Ходьба</item>
+        <item>Бег</item>
+        <item>Велосипед</item>
+        <item>Самокат</item>
+    </string-array>
+
 </resources>

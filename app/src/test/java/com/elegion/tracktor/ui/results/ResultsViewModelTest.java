@@ -52,7 +52,7 @@ public class ResultsViewModelTest {
         mTracks.add(new Track());
         when(mRealmRepository.getAll()).thenReturn(mTracks);
 
-        mResultsViewModel = new ResultsViewModel(mRealmRepository);
+        mResultsViewModel = new ResultsViewModel();
 
         mResultsViewModel.getTracks().observeForever(mObserver);
     }

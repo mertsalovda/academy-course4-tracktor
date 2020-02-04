@@ -21,6 +21,46 @@ public class Track extends RealmObject {
 
     private String imageBase64;
 
+    private float averageSpeed;
+
+    private float calories;
+
+    private int actionType;
+
+    private String comment;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setAverageSpeed(float averageSpeed) {
+        this.averageSpeed = averageSpeed;
+    }
+
+    public void setCalories(float calories) {
+        this.calories = calories;
+    }
+
+    public void setActionType(int actionType) {
+        this.actionType = actionType;
+    }
+
+    public float getAverageSpeed() {
+        return averageSpeed;
+    }
+
+    public float getCalories() {
+        return calories;
+    }
+
+    public int getActionType() {
+        return actionType;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

@@ -1,30 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/title_activity_preference">
+    <PreferenceCategory
+        android:key="tracktor_category"
+        android:title="@string/title_tracktor_category">
 
-    <ListPreference
-        android:defaultValue="@string/pref_default_value_unit"
-        android:dialogTitle="@string/dialog_title_distance_unit"
-        android:entries="@array/entries_list_preference_unit"
-        android:entryValues="@array/entryvalues_list_preference_unit"
-        android:key="@string/pref_key_unit"
-        android:title="@string/title_distance_unit" />
+        <ListPreference
+            android:defaultValue="@string/pref_default_value_unit"
+            android:dialogTitle="@string/dialog_title_distance_unit"
+            android:entries="@array/entries_list_preference_unit"
+            android:entryValues="@array/entryvalues_list_preference_unit"
+            android:key="@string/pref_key_unit"
+            android:title="@string/title_distance_unit" />
 
-    <ListPreference
-        android:defaultValue="@string/pref_default_value_shutdown"
-        android:dialogTitle="@string/dialog_title_auto_shutdown"
-        android:entries="@array/entries_list_preference_shutdown"
-        android:entryValues="@array/entryvalues_list_preference_shutdown"
-        android:key="@string/pref_key_shutdown"
-        android:title="@string/title_auto_shutdown" />
+        <ListPreference
+            android:defaultValue="@string/pref_default_value_shutdown"
+            android:dialogTitle="@string/dialog_title_auto_shutdown"
+            android:entries="@array/entries_list_preference_shutdown"
+            android:entryValues="@array/entryvalues_list_preference_shutdown"
+            android:key="@string/pref_key_shutdown"
+            android:title="@string/title_auto_shutdown" />
 
-    <EditTextPreference
-        android:defaultValue="@string/pref_default_value_weight"
-        android:dialogTitle="@string/dialog_title_user_weight"
-        android:digits="0123456789"
-        android:inputType="numberDecimal"
-        android:key="@string/pref_key_weight"
-        android:lines="1"
-        android:title="@string/dialog_title_user_weight" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="user_category"
+        android:title="@string/title_user_category">
 
+        <ListPreference
+            android:defaultValue="@string/pref_default_value_gender"
+            android:dialogTitle="@string/dialog_title_user_gender"
+            android:entries="@array/entries_list_preference_gender"
+            android:entryValues="@array/entryvalues_list_preference_gender"
+            android:key="@string/pref_key_gender"
+            android:title="@string/title_user_gender" />
+
+        <EditTextPreference
+            android:defaultValue="@string/pref_default_value_weight"
+            android:dialogTitle="@string/dialog_title_user_weight"
+            android:digits="0123456789"
+            android:inputType="numberDecimal"
+            android:key="@string/pref_key_weight"
+            android:lines="1"
+            android:title="@string/dialog_title_user_weight" />
+
+        <EditTextPreference
+            android:defaultValue="@string/pref_default_value_height"
+            android:dialogTitle="@string/dialog_title_user_height"
+            android:digits="0123456789"
+            android:inputType="numberDecimal"
+            android:key="@string/pref_key_height"
+            android:lines="1"
+            android:title="@string/dialog_title_user_height" />
+
+        <EditTextPreference
+            android:defaultValue="@string/pref_default_value_age"
+            android:dialogTitle="@string/dialog_title_user_age"
+            android:digits="0123456789"
+            android:inputType="numberDecimal"
+            android:key="@string/pref_key_age"
+            android:lines="1"
+            android:title="@string/dialog_title_user_age" />
+
+    </PreferenceCategory>
 </PreferenceScreen>
