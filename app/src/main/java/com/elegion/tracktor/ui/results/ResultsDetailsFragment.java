@@ -32,8 +32,6 @@ import com.elegion.tracktor.ui.results.dialog.CommentFragment;
 import com.elegion.tracktor.util.ScreenshotMaker;
 import com.elegion.tracktor.util.StringUtil;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -41,7 +39,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import toothpick.Scope;
 import toothpick.Toothpick;
-import toothpick.smoothie.provider.SharedPreferencesProvider;
 
 import static com.elegion.tracktor.ui.results.ResultsActivity.RESULT_ID;
 

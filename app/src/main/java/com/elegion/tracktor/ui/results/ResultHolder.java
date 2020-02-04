@@ -1,9 +1,11 @@
 package com.elegion.tracktor.ui.results;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.TextView;
 
+import com.elegion.tracktor.App;
 import com.elegion.tracktor.R;
 import com.elegion.tracktor.data.model.Track;
 
@@ -31,8 +33,8 @@ public class ResultHolder extends RecyclerView.ViewHolder {
 
     public void bind(Track track) {
         mTrackId = track.getId();
-        mDateText.setText(String.valueOf(mTrackId));
-        mDistanceText.setText(String.valueOf(track.getDistance()));
+        mDateText.setText(DateFormat.getDateFormat(App.getApp()).format(track.getDate()));
+        mDistanceText.setText("Пройдено: " + track.getDistance() + " м");
     }
 
     public void setListener(final ResultsFragment.OnItemClickListener listener) {
