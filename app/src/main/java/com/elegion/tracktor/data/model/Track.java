@@ -1,6 +1,7 @@
 package com.elegion.tracktor.data.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -27,7 +28,7 @@ public class Track extends RealmObject {
 
     private int actionType;
 
-    private String comment;
+    private String comment = "Введите комментарий";
 
     public String getComment() {
         return comment;
@@ -110,6 +111,40 @@ public class Track extends RealmObject {
                 ", distance=" + distance +
                 ", imageBase64=" + imageBase64 +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Track track = (Track) o;
+
+        if (id != track.id) return false;
+        if (duration != track.duration) return false;
+        if (Float.compare(track.averageSpeed, averageSpeed) != 0) return false;
+        if (Float.compare(track.calories, calories) != 0) return false;
+        if (actionType != track.actionType) return false;
+        if (date != null ? !date.equals(track.date) : track.date != null) return false;
+        if (distance != null ? !distance.equals(track.distance) : track.distance != null)
+            return false;
+        if (imageBase64 != null ? !imageBase64.equals(track.imageBase64) : track.imageBase64 != null)
+            return false;
+        return comment != null ? comment.equals(track.comment) : track.comment == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (int) (duration ^ (duration >>> 32));
+        result = 31 * result + (distance != null ? distance.hashCode() : 0);
+        result = 31 * result + (imageBase64 != null ? imageBase64.hashCode() : 0);
+        result = 31 * result + (averageSpeed != +0.0f ? Float.floatToIntBits(averageSpeed) : 0);
+        result = 31 * result + (calories != +0.0f ? Float.floatToIntBits(calories) : 0);
+        result = 31 * result + actionType;
+        result = 31 * result + (comment != null ? comment.hashCode() : 0);
+        return result;
     }
 }
 

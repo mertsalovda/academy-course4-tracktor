@@ -1,5 +1,7 @@
 package com.elegion.tracktor.util;
 
+import com.elegion.tracktor.data.model.Track;
+
 import java.util.Locale;
 
 public class StringUtil {
@@ -17,5 +19,21 @@ public class StringUtil {
 
     public static String round(double value, int places) {
         return String.format("%." + places + "f", value);
+    }
+
+    public static String getTextForShare(Track track, String[] actionType) {
+        return new StringBuilder()
+                .append("Время: " + StringUtil.getTimeText(track.getDuration()))
+                .append("\n")
+                .append("Расстояние: " + MathUtils.round(track.getDistance(), 2) + " м")
+                .append("\n")
+                .append("Средняя скорость: " + MathUtils.round(track.getAverageSpeed(), 2) + " км/ч")
+                .append("\n")
+                .append("Потрачено калорий: " + track.getCalories() + " ккал")
+                .append("\n")
+                .append("Вид активности: " + actionType[track.getActionType()])
+                .append("\n")
+                .append("Комментарий: " + track.getComment())
+                .toString();
     }
 }

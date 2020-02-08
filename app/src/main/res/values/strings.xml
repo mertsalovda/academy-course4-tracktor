@@ -64,4 +64,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_comment">Введите комментарий</string>
+    <string name="here_is_empty">Тут пусто...</string>
+
+    <string name="order_ask">По возрастанию</string>
+    <string name="order_desk">По убыванию</string>
+
+    <string name="sort_date">По дате</string>
+    <string name="sort_duration">По времени</string>
+    <string name="sort_distance">По дистанции</string>
+
+
+
 </resources>

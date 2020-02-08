@@ -28,7 +28,7 @@ import com.elegion.tracktor.App;
 import com.elegion.tracktor.R;
 import com.elegion.tracktor.data.model.Track;
 import com.elegion.tracktor.di.ViewModelModule;
-import com.elegion.tracktor.ui.results.dialog.CommentFragment;
+import com.elegion.tracktor.ui.results.dialog.CommentDialogFragment;
 import com.elegion.tracktor.util.ScreenshotMaker;
 import com.elegion.tracktor.util.StringUtil;
 
@@ -148,17 +148,12 @@ public class ResultsDetailsFragment extends Fragment {
         if (item.getItemId() == R.id.actionShare) {
             String path = MediaStore.Images.Media.insertImage(requireActivity().getContentResolver(), mImage, "Мой маршрут", null);
             Uri uri = Uri.parse(path);
-
+            Track track = mResultsViewModel.getTrack().getValue();
+            String[] actionsType = getResources().getStringArray(R.array.action_type);
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("image/jpeg");
             intent.putExtra(Intent.EXTRA_STREAM, uri);
-            intent.putExtra(Intent.EXTRA_TEXT,
-                    "Время: " + mTimeText.getText()
-                            + "\nРасстояние: " + mDistanceText.getText()
-                            + "\nСредняя скорость: " + mAverageSpeedText.getText()
-                            + "\nПотрачено калорий: " + mCaloriesText.getText()
-                            + "\nВид активности: " + mActionType.getSelectedItem()
-                            + "\nКомментарий: " + mComment.getText());
+            intent.putExtra(Intent.EXTRA_TEXT, StringUtil.getTextForShare(track,actionsType));
             startActivity(Intent.createChooser(intent, "Результаты маршрута"));
             return true;
         } else if (item.getItemId() == R.id.actionDelete) {
@@ -172,7 +167,7 @@ public class ResultsDetailsFragment extends Fragment {
 
     @OnClick(R.id.btnAddComment)
     void addComment() {
-        DialogFragment dialog = CommentFragment.newInstance(mComment.getText().toString());
+        DialogFragment dialog = CommentDialogFragment.newInstance(mComment.getText().toString());
         dialog.show(getChildFragmentManager(), "comment");
     }
 }

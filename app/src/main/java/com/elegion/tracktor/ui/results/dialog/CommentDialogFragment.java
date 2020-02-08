@@ -8,14 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
-import com.elegion.tracktor.App;
 import com.elegion.tracktor.R;
+import com.elegion.tracktor.data.model.Track;
 import com.elegion.tracktor.di.ViewModelModule;
 import com.elegion.tracktor.ui.results.ResultsDetailsFragment;
 import com.elegion.tracktor.ui.results.ResultsViewModel;
@@ -28,24 +25,37 @@ import toothpick.Toothpick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CommentFragment extends DialogFragment {
+public class CommentDialogFragment extends DialogFragment {
 
 
     private static final String COMMENT = "COMMENT";
-    EditText mComment;
+    private static final String TRACK_ID = "TRACK_ID";
+    private static final String CONTENT = "CONTENT";
+    private EditText mComment;
 
     @Inject
     ResultsViewModel mResultsViewModel;
+    private Track mTrack;
 
 
-    public CommentFragment() {
+    public CommentDialogFragment() {
         // Required empty public constructor
     }
 
-    public static CommentFragment newInstance(String comment) {
+    public static CommentDialogFragment newInstance(String comment) {
         Bundle args = new Bundle();
         args.putString(COMMENT, comment);
-        CommentFragment fragment = new CommentFragment();
+        args.putString(CONTENT, "COMMENT");
+        CommentDialogFragment fragment = new CommentDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static CommentDialogFragment newInstance(long trackId) {
+        Bundle args = new Bundle();
+        args.putLong(TRACK_ID, trackId);
+        args.putString(CONTENT, "ID");
+        CommentDialogFragment fragment = new CommentDialogFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,12 +78,32 @@ public class CommentFragment extends DialogFragment {
                 .setNegativeButton(R.string.cancel, (dialog, id) -> onCancel())
                 .create();
         mComment = view.findViewById(R.id.etComment);
-        mComment.setText(getArguments().getString(COMMENT));
+        switch (getArguments().getString(CONTENT)) {
+            case "COMMENT":
+                mComment.setText(getArguments().getString(COMMENT));
+                break;
+            case "ID":
+                mTrack = mResultsViewModel.getTrack(getArguments().getLong(TRACK_ID));
+                mComment.setText(mTrack.getComment());
+                break;
+            default:
+                break;
+        }
         return alertDialog;
     }
 
     void onSaveComment() {
-        mResultsViewModel.saveComment(mComment.getText().toString());
+        switch (getArguments().getString(CONTENT)) {
+            case "COMMENT":
+                mResultsViewModel.saveComment(mComment.getText().toString());
+                break;
+            case "ID":
+                mTrack.setComment(mComment.getText().toString().trim());
+                mResultsViewModel.updateTrack(mTrack);
+                break;
+            default:
+                break;
+        }
         dismiss();
     }
 

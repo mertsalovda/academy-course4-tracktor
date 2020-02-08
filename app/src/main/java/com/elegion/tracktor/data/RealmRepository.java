@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.inject.Inject;
 
+import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 
 /**
@@ -79,6 +80,18 @@ public class RealmRepository implements IRepository<Track> {
         mRealm.commitTransaction();
     }
 
+    @Override
+    public OrderedRealmCollection<Track> getItemsList() {
+        return mRealm.where(Track.class).findAll();
+    }
+
+    @Override
+    public void clearRepository() {
+        mRealm.beginTransaction();
+        mRealm.deleteAll();
+        mRealm.commitTransaction();
+    }
+
     public long createAndInsertTrackFrom(long duration, double distanse, String base64image) {
         Track track = new Track();
 
@@ -89,5 +102,15 @@ public class RealmRepository implements IRepository<Track> {
 
         return insertItem(track);
 
+    }
+
+    public void insertAll(List<Track> tracks){
+        mRealm.beginTransaction();
+        mRealm.deleteAll();
+        for (Track track : tracks){
+            track.setId(sPrimaryId.incrementAndGet());
+            mRealm.copyToRealm(track);
+        }
+        mRealm.commitTransaction();
     }
 }
