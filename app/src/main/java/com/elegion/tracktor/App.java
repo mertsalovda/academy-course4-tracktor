@@ -7,6 +7,7 @@ import android.support.v7.preference.PreferenceManager;
 import com.elegion.tracktor.di.RepositoryModule;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import toothpick.Scope;
 import toothpick.Toothpick;
 
@@ -19,12 +20,18 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Realm.init(this);
+
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
+
         sApp = this;
         sSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sAppScope = Toothpick.openScope(App.class);
         sAppScope.installModules(new RepositoryModule(this));
-
-        Realm.init(this);
     }
 
     public static Scope getAppScope() {
