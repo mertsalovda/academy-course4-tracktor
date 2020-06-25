@@ -74,7 +74,8 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
 
     private void initMap() {
         Context context = getContext();
-        if (context != null && ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PERMISSION_GRANTED) {
+        if (context != null
+                && ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
             mMap.setOnMyLocationButtonClickListener(this);
             mMap.setOnMyLocationClickListener(this);

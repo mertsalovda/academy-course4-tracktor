@@ -2,12 +2,14 @@ package com.elegion.tracktor.ui.map;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.SharedPreferences;
 
 import com.elegion.tracktor.App;
 import com.elegion.tracktor.data.RealmRepository;
 import com.elegion.tracktor.event.AddPositionToRouteEvent;
 import com.elegion.tracktor.event.UpdateRouteEvent;
 import com.elegion.tracktor.event.UpdateTimerEvent;
+import com.elegion.tracktor.util.DistanceConverter;
 import com.elegion.tracktor.util.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,6 +33,8 @@ public class MainViewModel extends ViewModel {
 
     @Inject
     RealmRepository mRealmRepository;
+    @Inject
+    SharedPreferences mPreferences;
 
     @Inject
     public MainViewModel() {
@@ -47,15 +51,17 @@ public class MainViewModel extends ViewModel {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUpdateTimer(UpdateTimerEvent event) {
+        int unit = Integer.parseInt(mPreferences.getString("unit", DistanceConverter.METER + ""));
         mTimeText.postValue(StringUtil.getTimeText(event.getSeconds()));
-        mDistanceText.postValue(StringUtil.getDistanceText(event.getDistance()));
+        mDistanceText.postValue(DistanceConverter.formatDistance(event.getDistance(), unit));
         mDurationRaw = event.getSeconds();
         mDistanceRaw = event.getDistance();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUpdateRoute(UpdateRouteEvent event) {
-        mDistanceText.postValue(StringUtil.getDistanceText(event.getDistance()));
+        int unit = Integer.parseInt(mPreferences.getString("unit", DistanceConverter.METER + ""));
+        mDistanceText.postValue(DistanceConverter.formatDistance(event.getDistance(), unit));
         mDistanceRaw = event.getDistance();
 
         startEnabled.postValue(false);
@@ -64,7 +70,8 @@ public class MainViewModel extends ViewModel {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAddPositionToRoute(AddPositionToRouteEvent event) {
-        mDistanceText.postValue(StringUtil.getDistanceText(event.getDistance()));
+        int unit = Integer.parseInt(mPreferences.getString("unit", DistanceConverter.METER + ""));
+        mDistanceText.postValue(DistanceConverter.formatDistance(event.getDistance(), unit));
     }
 
     public MutableLiveData<String> getTimeText() {
@@ -92,6 +99,11 @@ public class MainViewModel extends ViewModel {
     public void clear() {
         mTimeText.setValue("");
         mDistanceText.setValue("");
+    }
+
+    public void update() {
+        int unit = Integer.parseInt(mPreferences.getString("unit", DistanceConverter.METER + ""));
+        mDistanceText.postValue(DistanceConverter.formatDistance(mDistanceRaw, unit));
     }
 
     public long saveResults(String base54image) {

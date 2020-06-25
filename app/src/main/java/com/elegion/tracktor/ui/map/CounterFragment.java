@@ -56,6 +56,12 @@ public class CounterFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.update();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Scope scope = Toothpick.openScope(CounterFragment.class).installModules(new ViewModelModule(this));

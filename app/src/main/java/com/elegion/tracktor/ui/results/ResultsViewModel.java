@@ -10,6 +10,7 @@ import com.elegion.tracktor.R;
 import com.elegion.tracktor.data.IRepository;
 import com.elegion.tracktor.data.model.Track;
 import com.elegion.tracktor.util.CaloriesUtil;
+import com.elegion.tracktor.util.DistanceConverter;
 import com.elegion.tracktor.util.MathUtils;
 import com.elegion.tracktor.util.SpeedUtil;
 
@@ -38,6 +39,8 @@ public class ResultsViewModel extends ViewModel {
     private MutableLiveData<Track> mTrack = new MediatorLiveData<>();
     private MutableLiveData<OrderedRealmCollection<Track>> mTracksRealm = new MediatorLiveData<>();
 
+    private MutableLiveData<String> mDistance = new MediatorLiveData<>();
+
     private float result;
 
     public ResultsViewModel() {
@@ -48,6 +51,15 @@ public class ResultsViewModel extends ViewModel {
         if (mTracksRealm.getValue() == null || mTracksRealm.getValue().isEmpty()) {
             updateTracks();
         }
+    }
+
+    public MutableLiveData<String> getDistance() {
+        return mDistance;
+    }
+
+    private void updateDistance(Double distance){
+        int unit = Integer.parseInt(mPreferences.getString("unit", DistanceConverter.METER+""));
+        mDistance.postValue(DistanceConverter.formatDistance(distance, unit));
     }
 
     public MutableLiveData<Track> getTrack() {
@@ -68,6 +80,7 @@ public class ResultsViewModel extends ViewModel {
         track.setAverageSpeed(getAverageSpeed(track));
         track.setCalories(getCalories(track));
         mTrack.postValue(track);
+        updateDistance(track.getDistance());
     }
 
     public void updateTrack(Track track) {
@@ -85,8 +98,8 @@ public class ResultsViewModel extends ViewModel {
     }
 
     private float getCalories(Track track) {
-        float weight = Float.valueOf(mPreferences.getString("weight", "70"));
-        int height = Integer.valueOf(mPreferences.getString("height", "170"));
+        float weight = Float.parseFloat(mPreferences.getString("weight", "70"));
+        int height = Integer.parseInt(mPreferences.getString("height", "170"));
         String[] activeTypes = App.getApp().getResources().getStringArray(R.array.action_type);
         result = CaloriesUtil.execute(
                 track.getActionType(),

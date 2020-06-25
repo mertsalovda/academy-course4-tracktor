@@ -100,7 +100,7 @@ public class ResultsDetailsFragment extends Fragment {
         mResultsViewModel.getTrack().observe(this, track -> {
             mDateText.setText(format.format(track.getDate()));
             mTimeText.setText(StringUtil.getTimeText(track.getDuration()));
-            mDistanceText.setText(track.getDistance().toString() + " м");
+//            mDistanceText.setText(track.getDistance().toString() + " м");
             mAverageSpeedText.setText(track.getAverageSpeed() + " км/ч");
             mCaloriesText.setText(track.getCalories() + " ккал");
             mActionType.setSelection(track.getActionType());
@@ -108,6 +108,9 @@ public class ResultsDetailsFragment extends Fragment {
 
             mImage = ScreenshotMaker.fromBase64(track.getImageBase64());
             mScreenshotImage.setImageBitmap(mImage);
+        });
+        mResultsViewModel.getDistance().observe(this, distance -> {
+            mDistanceText.setText(distance);
         });
         mActionType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

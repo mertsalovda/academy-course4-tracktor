@@ -1,6 +1,8 @@
 package com.elegion.tracktor.ui.results;
 
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.elegion.tracktor.event.ClickOnHolderEvent;
 import com.elegion.tracktor.event.DeleteEvent;
 import com.elegion.tracktor.event.EditCommentEvent;
 import com.elegion.tracktor.event.ShareEvent;
+import com.elegion.tracktor.util.DistanceConverter;
 import com.elegion.tracktor.util.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -67,12 +70,12 @@ public class ResultHolder extends RecyclerView.ViewHolder {
         return super.toString() + " '" + mDistanceText.getText() + "'";
     }
 
-    public void bind(Track track) {
+    public void bind(Track track, int unit) {
         String[] actionTypes = App.getApp().getResources().getStringArray(R.array.action_type);
         mTrackId = track.getId();
         mDateText.setText(DateFormat.getDateFormat(App.getApp()).format(track.getDate()));
         mTimeText.setText("Время затрачено: " + StringUtil.getTimeText(track.getDuration()));
-        mDistanceText.setText("Пройдено: " + track.getDistance() + " м");
+        mDistanceText.setText("Пройдено: " + DistanceConverter.formatDistance(track.getDistance(), unit));
 
         mSpeedText.setText("Средняя скорость: " + track.getAverageSpeed() + " км/ч");
         mCaloriesText.setText("Потрачено каллорий: " + track.getCalories() + " ккал");

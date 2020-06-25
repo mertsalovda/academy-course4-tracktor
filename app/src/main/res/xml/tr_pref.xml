@@ -9,7 +9,7 @@
             android:defaultValue="@string/pref_default_value_unit"
             android:dialogTitle="@string/dialog_title_distance_unit"
             android:entries="@array/entries_list_preference_unit"
-            android:entryValues="@array/entryvalues_list_preference_unit"
+            android:entryValues="@array/entry_values_list_preference_unit"
             android:key="@string/pref_key_unit"
             android:title="@string/title_distance_unit" />
 
@@ -17,7 +17,7 @@
             android:defaultValue="@string/pref_default_value_shutdown"
             android:dialogTitle="@string/dialog_title_auto_shutdown"
             android:entries="@array/entries_list_preference_shutdown"
-            android:entryValues="@array/entryvalues_list_preference_shutdown"
+            android:entryValues="@array/entry_values_list_preference_shutdown"
             android:key="@string/pref_key_shutdown"
             android:title="@string/title_auto_shutdown" />
 
@@ -30,7 +30,7 @@
             android:defaultValue="@string/pref_default_value_gender"
             android:dialogTitle="@string/dialog_title_user_gender"
             android:entries="@array/entries_list_preference_gender"
-            android:entryValues="@array/entryvalues_list_preference_gender"
+            android:entryValues="@array/entry_values_list_preference_gender"
             android:key="@string/pref_key_gender"
             android:title="@string/title_user_gender" />
 

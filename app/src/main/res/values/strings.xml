@@ -20,13 +20,13 @@
     <string name="dialog_title_distance_unit">Выберите единицу измерения</string>
     <string name="title_auto_shutdown">Автоотключение</string>
     <string name="dialog_title_auto_shutdown">Выберите время автоотключения</string>
-    <string name="title_user_weight">Вес пользователя</string>
-    <string name="dialog_title_user_weight">Вес пользователя</string>
+    <string name="title_user_weight">Вес пользователя, кг</string>
+    <string name="dialog_title_user_weight">Вес пользователя, кг</string>
     <string name="title_user_gender">Пол пользователя</string>
     <string name="dialog_title_user_gender">Пол пользователя</string>
 
-    <string name="title_user_height">Рост пользователя</string>
-    <string name="dialog_title_user_height">Рост пользователя</string>
+    <string name="title_user_height">Рост пользователяб, см</string>
+    <string name="dialog_title_user_height">Рост пользователя, см</string>
     <string name="title_user_age">Возвраст пользователя</string>
     <string name="dialog_title_user_age">Возвраст пользователя</string>
 

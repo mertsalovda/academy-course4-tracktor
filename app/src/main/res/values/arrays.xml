@@ -4,11 +4,15 @@
     <string-array name="entries_list_preference_unit">
         <item>Километры</item>
         <item>Мили</item>
+        <item>Метры</item>
+        <item>Футы</item>
     </string-array>
 
-    <string-array name="entryvalues_list_preference_unit">
+    <string-array name="entry_values_list_preference_unit">
         <item>1</item>
         <item>2</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
 
     <string-array name="entries_list_preference_shutdown">
@@ -18,7 +22,7 @@
         <item>60 минут</item>
     </string-array>
 
-    <string-array name="entryvalues_list_preference_shutdown">
+    <string-array name="entry_values_list_preference_shutdown">
         <item>  -1</item>
         <item> 600</item>
         <item>1800</item>
@@ -31,7 +35,7 @@
         <item>женщина</item>
     </string-array>
 
-    <string-array name="entryvalues_list_preference_gender">
+    <string-array name="entry_values_list_preference_gender">
         <item>-1</item>
         <item>1</item>
         <item>2</item>
