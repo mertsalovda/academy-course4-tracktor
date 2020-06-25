@@ -21,6 +21,14 @@
             android:key="@string/pref_key_shutdown"
             android:title="@string/title_auto_shutdown" />
 
+        <ListPreference
+            android:defaultValue="@string/pref_default_value_compression"
+            android:dialogTitle="@string/dialog_title_compression"
+            android:entries="@array/entries_list_preference_compression"
+            android:entryValues="@array/entry_values_list_preference_compression"
+            android:key="@string/pref_key_compression"
+            android:title="Сжатие изображения, %" />
+
     </PreferenceCategory>
     <PreferenceCategory
         android:key="user_category"

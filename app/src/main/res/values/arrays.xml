@@ -29,6 +29,21 @@
         <item>3600</item>
     </string-array>
 
+
+    <string-array name="entries_list_preference_compression">
+        <item>100</item>
+        <item>75</item>
+        <item>50</item>
+        <item>25</item>
+    </string-array>
+
+    <string-array name="entry_values_list_preference_compression">
+        <item>100</item>
+        <item>75</item>
+        <item>50</item>
+        <item>25</item>
+    </string-array>
+
     <string-array name="entries_list_preference_gender">
         <item>   -   </item>
         <item>мужчина</item>

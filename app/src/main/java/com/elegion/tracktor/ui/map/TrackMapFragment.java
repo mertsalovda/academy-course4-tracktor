@@ -127,8 +127,8 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
             addMarker(route.get(route.size() - 1), getString(R.string.end));
 
             takeMapScreenshot(route, bitmap -> {
-
-                String base64image = ScreenshotMaker.toBase64(bitmap);
+                int quality = Integer.parseInt( mMainViewModel.mPreferences.getString("compression", 100+""));
+                String base64image = ScreenshotMaker.toBase64(bitmap, quality);
                 long resultId = mMainViewModel.saveResults(base64image);
                 ResultsActivity.start(getContext(), resultId);
             });

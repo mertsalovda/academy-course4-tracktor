@@ -20,6 +20,7 @@
     <string name="dialog_title_distance_unit">Выберите единицу измерения</string>
     <string name="title_auto_shutdown">Автоотключение</string>
     <string name="dialog_title_auto_shutdown">Выберите время автоотключения</string>
+    <string name="dialog_title_compression">Выберите степень сжатия изображения, %</string>
     <string name="title_user_weight">Вес пользователя, кг</string>
     <string name="dialog_title_user_weight">Вес пользователя, кг</string>
     <string name="title_user_gender">Пол пользователя</string>
@@ -36,12 +37,14 @@
 
     <string name="pref_key_unit">unit</string>
     <string name="pref_key_shutdown">shutdown</string>
+    <string name="pref_key_compression">compression</string>
     <string name="pref_key_weight">weight</string>
     <string name="pref_key_height">height</string>
     <string name="pref_key_gender">gender</string>
     <string name="pref_key_age">age</string>
     <string name="pref_default_value_unit">1</string>
     <string name="pref_default_value_shutdown">-1</string>
+    <string name="pref_default_value_compression">100</string>
     <string name="pref_default_value_weight">60</string>
     <string name="pref_default_value_height">170</string>
     <string name="pref_default_value_age">18</string>
