@@ -20,7 +20,7 @@
     <string name="dialog_title_distance_unit">Выберите единицу измерения</string>
     <string name="title_auto_shutdown">Автоотключение</string>
     <string name="dialog_title_auto_shutdown">Выберите время автоотключения</string>
-    <string name="dialog_title_compression">Выберите степень сжатия изображения, %</string>
+    <string name="dialog_title_compression">Выберите качество изображения, %</string>
     <string name="title_user_weight">Вес пользователя, кг</string>
     <string name="dialog_title_user_weight">Вес пользователя, кг</string>
     <string name="title_user_gender">Пол пользователя</string>
@@ -30,7 +30,7 @@
     <string name="dialog_title_user_height">Рост пользователя, см</string>
     <string name="title_user_age">Возвраст пользователя</string>
     <string name="dialog_title_user_age">Возвраст пользователя</string>
-    <string name="title_compression_image">Сжатие изображения, %</string>
+    <string name="title_compression_image">Качество изображения, %</string>
 
     <string name="title_map_category">Карта</string>
     <string name="title_start_of_road_marker">Маркер начала маршрута</string>
@@ -58,7 +58,7 @@
     <string name="pref_key_gender">gender</string>
     <string name="pref_key_age">age</string>
 
-    <string name="pref_default_value_unit">1</string>
+    <string name="pref_default_value_unit">3</string>
     <string name="pref_default_value_shutdown">-1</string>
     <string name="pref_default_value_compression">100</string>
     <string name="pref_default_value_weight">60</string>
@@ -68,7 +68,7 @@
     <string name="pref_default_value_start_marker">60</string>
     <string name="pref_default_value_end_marker">300</string>
     <string name="pref_default_value_width_line">10</string>
-    <string name="pref_default_value_color_line">-1</string>
+    <string name="pref_default_value_color_line">#FF000000</string>
 
     <string name="btn_delete_result">Удалить</string>
 

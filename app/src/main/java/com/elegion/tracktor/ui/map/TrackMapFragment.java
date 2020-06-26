@@ -7,7 +7,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
 import android.widget.Toast;
 
 import com.elegion.tracktor.R;
@@ -17,7 +16,6 @@ import com.elegion.tracktor.event.GetRouteEvent;
 import com.elegion.tracktor.event.StartTrackEvent;
 import com.elegion.tracktor.event.StopTrackEvent;
 import com.elegion.tracktor.event.UpdateRouteEvent;
-import com.elegion.tracktor.service.CounterService;
 import com.elegion.tracktor.ui.results.ResultsActivity;
 import com.elegion.tracktor.util.ScreenshotMaker;
 import com.google.android.gms.maps.CameraUpdate;
@@ -146,10 +144,10 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
     }
 
     private void updateSettings() {
-        mStartMarker = Float.parseFloat(mMainViewModel.mPreferences.getString("start_marker", 60 + ""));
-        mEndMarker = Float.parseFloat(mMainViewModel.mPreferences.getString("end_marker", 300 + ""));
-        mWidthLine = Float.parseFloat(mMainViewModel.mPreferences.getString("width_line", 10 + ""));
-        mColorLine = Color.parseColor(mMainViewModel.mPreferences.getString("color_line", "#FF000000"));
+        mStartMarker = Float.parseFloat(mMainViewModel.mPreferences.getString("start_marker", getString(R.string.pref_default_value_start_marker)));
+        mEndMarker = Float.parseFloat(mMainViewModel.mPreferences.getString("end_marker", getString(R.string.pref_default_value_end_marker)));
+        mWidthLine = Float.parseFloat(mMainViewModel.mPreferences.getString("width_line", getString(R.string.pref_default_value_width_line)));
+        mColorLine = Color.parseColor(mMainViewModel.mPreferences.getString("color_line", getString(R.string.pref_default_value_color_line)));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -163,7 +161,7 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
             addMarker(route.get(route.size() - 1), getString(R.string.end), mEndMarker);
 
             takeMapScreenshot(route, bitmap -> {
-                int quality = Integer.parseInt(mMainViewModel.mPreferences.getString("compression", 100 + ""));
+                int quality = Integer.parseInt(mMainViewModel.mPreferences.getString("compression", getString(R.string.pref_default_value_compression)));
                 String base64image = ScreenshotMaker.toBase64(bitmap, quality);
                 long resultId = mMainViewModel.saveResults(base64image);
                 ResultsActivity.start(getContext(), resultId);

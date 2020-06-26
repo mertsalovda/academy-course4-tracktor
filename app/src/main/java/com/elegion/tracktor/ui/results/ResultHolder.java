@@ -1,8 +1,6 @@
 package com.elegion.tracktor.ui.results;
 
-import android.content.SharedPreferences;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.View;

@@ -100,7 +100,6 @@ public class ResultsDetailsFragment extends Fragment {
         mResultsViewModel.getTrack().observe(this, track -> {
             mDateText.setText(format.format(track.getDate()));
             mTimeText.setText(StringUtil.getTimeText(track.getDuration()));
-//            mDistanceText.setText(track.getDistance().toString() + " м");
             mAverageSpeedText.setText(track.getAverageSpeed() + " км/ч");
             mCaloriesText.setText(track.getCalories() + " ккал");
             mActionType.setSelection(track.getActionType());
