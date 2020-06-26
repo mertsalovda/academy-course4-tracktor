@@ -44,6 +44,56 @@
         <item>25</item>
     </string-array>
 
+    <string-array name="entries_list_preference_markers">
+        <item>HUE_ORANGE</item>
+        <item>HUE_YELLOW</item>
+        <item>HUE_GREEN</item>
+        <item>HUE_CYAN</item>
+        <item>HUE_AZURE</item>
+        <item>HUE_BLUE</item>
+        <item>HUE_VIOLET</item>
+        <item>HUE_MAGENTA</item>
+        <item>HUE_ROSE</item>
+    </string-array>
+
+    <string-array name="entry_values_list_preference_markers">
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>180</item>
+        <item>210</item>
+        <item>240</item>
+        <item>270</item>
+        <item>300</item>
+        <item>330</item>
+    </string-array>
+
+    <string-array name="entries_list_preference_width_line">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+    </string-array>
+
+    <string-array name="entry_values_list_preference_width_line">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+    </string-array>
+
+    <string-array name="entries_list_preference_color_line">
+        <item>По умолчанию</item>
+        <item>Красный</item>
+        <item>Синий</item>
+        <item>Зелёный</item>
+    </string-array>
+
+    <string-array name="entry_values_list_preference_color_line">
+        <item>#FF000000</item>
+        <item>#FFFF0303</item>
+        <item>#FF0037FF</item>
+        <item>#FF2FFF00</item>
+    </string-array>
+
     <string-array name="entries_list_preference_gender">
         <item>   -   </item>
         <item>мужчина</item>

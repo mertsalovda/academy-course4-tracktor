@@ -48,6 +48,7 @@ public class MainPreferences extends PreferenceFragmentCompat implements SharedP
     }
 
     private void configureSummaryEntries() {
+        setSummaryFor(findPreference(getString(R.string.pref_key_color_line)));
         setSummaryFor(findPreference(getString(R.string.pref_key_unit)));
         setSummaryFor(findPreference(getString(R.string.pref_key_shutdown)));
         setSummaryFor(findPreference(getString(R.string.pref_key_compression)));
@@ -55,6 +56,9 @@ public class MainPreferences extends PreferenceFragmentCompat implements SharedP
         setSummaryFor(findPreference(getString(R.string.pref_key_gender)));
         setSummaryFor(findPreference(getString(R.string.pref_key_height)));
         setSummaryFor(findPreference(getString(R.string.pref_key_age)));
+        setSummaryFor(findPreference(getString(R.string.pref_key_start_marker)));
+        setSummaryFor(findPreference(getString(R.string.pref_key_end_marker)));
+        setSummaryFor(findPreference(getString(R.string.pref_key_width_line)));
     }
 
     private void setSummaryFor(Preference preference) {

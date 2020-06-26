@@ -30,6 +30,17 @@
     <string name="dialog_title_user_height">Рост пользователя, см</string>
     <string name="title_user_age">Возвраст пользователя</string>
     <string name="dialog_title_user_age">Возвраст пользователя</string>
+    <string name="title_compression_image">Сжатие изображения, %</string>
+
+    <string name="title_map_category">Карта</string>
+    <string name="title_start_of_road_marker">Маркер начала маршрута</string>
+    <string name="dialog_title_start_marker">Выберите цвет маркера начала маршрута</string>
+    <string name="title_end_of_road_marker">Марке конца маршрута</string>
+    <string name="dialog_title_end_marker">Выберите цвет маркера конца маршрута</string>
+    <string name="title_color_of_road_line">Цвет линии маршрута</string>
+    <string name="dialog_title_color_line">Выберите цвет маршрута</string>
+    <string name="title_width_of_road_line">Ширина линии маршрута</string>
+    <string name="dialog_title_width_line">Выберите ширину линии маршрута</string>
 
 
     <string name="title_user_category">О пользователе</string>
@@ -38,10 +49,15 @@
     <string name="pref_key_unit">unit</string>
     <string name="pref_key_shutdown">shutdown</string>
     <string name="pref_key_compression">compression</string>
+    <string name="pref_key_start_marker">start_marker</string>
+    <string name="pref_key_end_marker">end_marker</string>
+    <string name="pref_key_width_line">width_line</string>
+    <string name="pref_key_color_line">color_line</string>
     <string name="pref_key_weight">weight</string>
     <string name="pref_key_height">height</string>
     <string name="pref_key_gender">gender</string>
     <string name="pref_key_age">age</string>
+
     <string name="pref_default_value_unit">1</string>
     <string name="pref_default_value_shutdown">-1</string>
     <string name="pref_default_value_compression">100</string>
@@ -49,6 +65,11 @@
     <string name="pref_default_value_height">170</string>
     <string name="pref_default_value_age">18</string>
     <string name="pref_default_value_gender">-1</string>
+    <string name="pref_default_value_start_marker">60</string>
+    <string name="pref_default_value_end_marker">300</string>
+    <string name="pref_default_value_width_line">10</string>
+    <string name="pref_default_value_color_line">-1</string>
+
     <string name="btn_delete_result">Удалить</string>
 
     <string name="permissions_request_title">Внимание!</string>
@@ -75,7 +96,4 @@
     <string name="sort_date">По дате</string>
     <string name="sort_duration">По времени</string>
     <string name="sort_distance">По дистанции</string>
-
-
-
 </resources>

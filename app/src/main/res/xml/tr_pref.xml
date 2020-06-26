@@ -27,7 +27,44 @@
             android:entries="@array/entries_list_preference_compression"
             android:entryValues="@array/entry_values_list_preference_compression"
             android:key="@string/pref_key_compression"
-            android:title="Сжатие изображения, %" />
+            android:title="@string/title_compression_image" />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="map_category"
+        android:title="@string/title_map_category">
+
+        <ListPreference
+            android:defaultValue="@string/pref_default_value_start_marker"
+            android:dialogTitle="@string/dialog_title_start_marker"
+            android:entries="@array/entries_list_preference_markers"
+            android:entryValues="@array/entry_values_list_preference_markers"
+            android:key="@string/pref_key_start_marker"
+            android:title="@string/title_start_of_road_marker" />
+
+        <ListPreference
+            android:defaultValue="@string/pref_default_value_end_marker"
+            android:dialogTitle="@string/dialog_title_end_marker"
+            android:entries="@array/entries_list_preference_markers"
+            android:entryValues="@array/entry_values_list_preference_markers"
+            android:key="@string/pref_key_end_marker"
+            android:title="@string/title_end_of_road_marker" />
+
+        <ListPreference
+            android:defaultValue="@string/pref_default_value_width_line"
+            android:dialogTitle="@string/dialog_title_width_line"
+            android:entries="@array/entries_list_preference_width_line"
+            android:entryValues="@array/entry_values_list_preference_width_line"
+            android:key="@string/pref_key_width_line"
+            android:title="@string/title_width_of_road_line" />
+
+        <ListPreference
+            android:defaultValue="@string/pref_default_value_color_line"
+            android:dialogTitle="@string/dialog_title_color_line"
+            android:entries="@array/entries_list_preference_color_line"
+            android:entryValues="@array/entry_values_list_preference_color_line"
+            android:key="@string/pref_key_color_line"
+            android:title="@string/title_color_of_road_line" />
 
     </PreferenceCategory>
     <PreferenceCategory

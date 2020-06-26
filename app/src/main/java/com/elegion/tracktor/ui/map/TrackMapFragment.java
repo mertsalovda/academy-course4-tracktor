@@ -2,10 +2,12 @@ package com.elegion.tracktor.ui.map;
 
 import android.Manifest;
 import android.content.Context;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
 import android.widget.Toast;
 
 import com.elegion.tracktor.R;
@@ -15,6 +17,7 @@ import com.elegion.tracktor.event.GetRouteEvent;
 import com.elegion.tracktor.event.StartTrackEvent;
 import com.elegion.tracktor.event.StopTrackEvent;
 import com.elegion.tracktor.event.UpdateRouteEvent;
+import com.elegion.tracktor.service.CounterService;
 import com.elegion.tracktor.ui.results.ResultsActivity;
 import com.elegion.tracktor.util.ScreenshotMaker;
 import com.google.android.gms.maps.CameraUpdate;
@@ -22,15 +25,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -49,10 +55,17 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
 
     public static final int DEFAULT_ZOOM = 15;
 
+    private boolean mIsStopped = true;
+
     private GoogleMap mMap;
 
     @Inject
     MainViewModel mMainViewModel;
+    private float mStartMarker;
+    private float mEndMarker;
+    private List<LatLng> mRoute = new ArrayList<>();
+    private float mWidthLine = 10f;
+    private int mColorLine = Color.BLACK;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -64,6 +77,7 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
         getMapAsync(this);
         Scope scope = Toothpick.openScope(CounterFragment.class).installModules(new ViewModelModule(this));
         Toothpick.inject(this, scope);
+        updateSettings();
     }
 
     @Override
@@ -87,6 +101,9 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
         super.onResume();
         EventBus.getDefault().register(this);
         EventBus.getDefault().post(new GetRouteEvent());
+        if (mIsStopped && !mRoute.isEmpty()) {
+            onUpdateRoute(new UpdateRouteEvent(mRoute, 0));
+        }
     }
 
     @Override
@@ -97,37 +114,56 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAddPositionToRoute(AddPositionToRouteEvent event) {
-        mMap.addPolyline(new PolylineOptions().add(event.getLastPosition(), event.getNewPosition()));
+        Polyline polyline = mMap.addPolyline(new PolylineOptions()
+                .add(event.getLastPosition(), event.getNewPosition()));
+        polyline.setWidth(mWidthLine);
+        polyline.setColor(mColorLine);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(event.getNewPosition(), DEFAULT_ZOOM));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUpdateRoute(UpdateRouteEvent event) {
         mMap.clear();
-
-        List<LatLng> route = event.getRoute();
-        mMap.addPolyline(new PolylineOptions().addAll(route));
-        addMarker(route.get(0), getString(R.string.start));
-        zoomRoute(route);
-
+        updateSettings();
+        mRoute = event.getRoute();
+        Polyline polyline = mMap.addPolyline(new PolylineOptions()
+                .addAll(mRoute));
+        polyline.setWidth(mWidthLine);
+        polyline.setColor(mColorLine);
+        addMarker(mRoute.get(0), getString(R.string.start), mStartMarker);
+        zoomRoute(mRoute);
+        if (mIsStopped) {
+            addMarker(mRoute.get(mRoute.size() - 1), getString(R.string.end), mEndMarker);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStartRoute(StartTrackEvent event) {
+        mIsStopped = false;
         mMap.clear();
-        addMarker(event.getStartPosition(), getString(R.string.start));
+        updateSettings();
+        addMarker(event.getStartPosition(), getString(R.string.start), mStartMarker);
+    }
+
+    private void updateSettings() {
+        mStartMarker = Float.parseFloat(mMainViewModel.mPreferences.getString("start_marker", 60 + ""));
+        mEndMarker = Float.parseFloat(mMainViewModel.mPreferences.getString("end_marker", 300 + ""));
+        mWidthLine = Float.parseFloat(mMainViewModel.mPreferences.getString("width_line", 10 + ""));
+        mColorLine = Color.parseColor(mMainViewModel.mPreferences.getString("color_line", "#FF000000"));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStopRoute(StopTrackEvent event) {
+        mIsStopped = true;
         List<LatLng> route = event.getRoute();
         if (route.isEmpty()) {
             Toast.makeText(getContext(), R.string.dont_stay, Toast.LENGTH_SHORT).show();
         } else {
-            addMarker(route.get(route.size() - 1), getString(R.string.end));
+            updateSettings();
+            addMarker(route.get(route.size() - 1), getString(R.string.end), mEndMarker);
 
             takeMapScreenshot(route, bitmap -> {
-                int quality = Integer.parseInt( mMainViewModel.mPreferences.getString("compression", 100+""));
+                int quality = Integer.parseInt(mMainViewModel.mPreferences.getString("compression", 100 + ""));
                 String base64image = ScreenshotMaker.toBase64(bitmap, quality);
                 long resultId = mMainViewModel.saveResults(base64image);
                 ResultsActivity.start(getContext(), resultId);
@@ -135,8 +171,11 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
         }
     }
 
-    private void addMarker(LatLng position, String text) {
-        mMap.addMarker(new MarkerOptions().position(position).title(text));
+    private void addMarker(LatLng position, String text, float marker) {
+        mMap.addMarker(new MarkerOptions()
+                .position(position)
+                .icon(BitmapDescriptorFactory.defaultMarker(marker))
+                .title(text));
     }
 
     private void takeMapScreenshot(List<LatLng> route, GoogleMap.SnapshotReadyCallback snapshotCallback) {
