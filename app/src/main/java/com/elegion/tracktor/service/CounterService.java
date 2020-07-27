@@ -2,21 +2,15 @@ package com.elegion.tracktor.service;
 
 import android.Manifest;
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
@@ -29,7 +23,6 @@ import com.elegion.tracktor.event.StopTrackEvent;
 import com.elegion.tracktor.event.UpdateRouteEvent;
 import com.elegion.tracktor.event.UpdateTimerEvent;
 import com.elegion.tracktor.service.helpers.NotificationHelper;
-import com.elegion.tracktor.ui.map.MainActivity;
 import com.elegion.tracktor.util.StringUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -60,6 +53,7 @@ public class CounterService extends Service {
     public static final String CHANNEL_NAME = "Counter Service";
     public static final int NOTIFICATION_ID = 101;
     public static final int REQUEST_CODE_LAUNCH = 0;
+    public static final int REQUEST_CODE_STOP = 1;
 
     public static final int UPDATE_INTERVAL = 15_000;
     public static final int UPDATE_FASTEST_INTERVAL = 5_000;
@@ -120,8 +114,8 @@ public class CounterService extends Service {
         super.onCreate();
         EventBus.getDefault().register(this);
         mNotificationHelper = new NotificationHelper(this);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PERMISSION_GRANTED) {
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PERMISSION_GRANTED) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 mNotificationHelper.createNotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_NONE);

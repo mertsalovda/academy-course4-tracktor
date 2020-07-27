@@ -14,6 +14,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
 import com.elegion.tracktor.R;
+import com.elegion.tracktor.service.CounterService;
 import com.elegion.tracktor.ui.map.MainActivity;
 
 public class NotificationHelper {
@@ -33,7 +34,7 @@ public class NotificationHelper {
     }
 
     public Notification buildNotification() {
-        return buildNotification("", "", 0);
+        return buildNotification("", "", CounterService.REQUEST_CODE_LAUNCH);
     }
 
     public Notification buildNotification(String time, String distance, int requestCode) {
@@ -47,7 +48,6 @@ public class NotificationHelper {
                 .setContentText(message)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .build();
-
     }
 
     private void configureNotificationBuilder(int requestCode) {
@@ -59,6 +59,15 @@ public class NotificationHelper {
         PendingIntent contentIntent = PendingIntent.getActivity(
                 mService, requestCode, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Intent stopIntent = new Intent(mService, MainActivity.class);
+        stopIntent.setAction(Intent.ACTION_MAIN);
+        stopIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        stopIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
+                | Intent.FLAG_ACTIVITY_NEW_TASK);
+        stopIntent.putExtra("ACTION", "STOP");
+        PendingIntent stopPendingIntent = PendingIntent.getActivity(
+                mService, CounterService.REQUEST_CODE_STOP, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         mNotificationBuilder = new NotificationCompat.Builder(mService, mChanelID)
                 .setContentIntent(contentIntent)
                 .setOngoing(true)
@@ -66,7 +75,8 @@ public class NotificationHelper {
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle(mService.getString(R.string.route_active))
                 .setVibrate(new long[]{0})
-                .setColor(ContextCompat.getColor(mService, R.color.colorAccent));
+                .setColor(ContextCompat.getColor(mService, R.color.colorAccent))
+                .addAction(R.drawable.ic_baseline_stop_24, mService.getString(R.string.stop), stopPendingIntent);
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

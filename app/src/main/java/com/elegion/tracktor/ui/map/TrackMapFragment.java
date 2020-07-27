@@ -36,6 +36,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -82,6 +83,7 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMapLoadedCallback(this::initMap);
+        EventBus.getDefault().post(new GetRouteEvent());
     }
 
     private void initMap() {

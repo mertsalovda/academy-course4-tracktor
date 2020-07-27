@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import com.elegion.tracktor.App;
 import com.elegion.tracktor.data.RealmRepository;
 import com.elegion.tracktor.event.AddPositionToRouteEvent;
+import com.elegion.tracktor.event.StopBtnClickedEvent;
 import com.elegion.tracktor.event.UpdateRouteEvent;
 import com.elegion.tracktor.event.UpdateTimerEvent;
 import com.elegion.tracktor.util.DistanceConverter;
@@ -47,6 +48,12 @@ public class MainViewModel extends ViewModel {
     public void switchButtons() {
         startEnabled.setValue(!startEnabled.getValue());
         stopEnabled.setValue(!stopEnabled.getValue());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void switchButtons(StopBtnClickedEvent event) {
+        startEnabled.postValue(!startEnabled.getValue());
+        stopEnabled.postValue(!stopEnabled.getValue());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

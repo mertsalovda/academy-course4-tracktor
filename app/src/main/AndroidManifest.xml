@@ -31,8 +31,8 @@
         <activity android:name=".ui.results.ResultsActivity" />
 
         <activity
-            android:label="@string/title_activity_preference"
-            android:name=".ui.preferences.PreferenceActivity"/>
+            android:name=".ui.preferences.PreferenceActivity"
+            android:label="@string/title_activity_preference" />
 
         <service
             android:name=".service.CounterService"

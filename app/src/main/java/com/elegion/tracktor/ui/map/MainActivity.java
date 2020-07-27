@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.ActivityCompat;
@@ -42,7 +43,19 @@ public class MainActivity extends AppCompatActivity {
         } else {
             configureMap();
         }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getIntent().getStringExtra("ACTION") == null) {
+            return;
+        }
+        if (getIntent().getStringExtra("ACTION").equals("STOP")) {
+            new Handler().postDelayed(() -> EventBus.getDefault().post(new StopBtnClickedEvent()), 5000);
+            getIntent().removeExtra("ACTION");
+            Toast.makeText(this, "STOP", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -54,7 +67,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             startService(serviceIntent);
         }
+    }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -134,12 +152,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Toast.makeText(this, "from notify", Toast.LENGTH_SHORT).show();
     }
 
     @NonNull

@@ -85,7 +85,6 @@ public class CounterFragment extends Fragment {
     @OnClick(R.id.buttonStop)
     void onStopClick() {
         EventBus.getDefault().post(new StopBtnClickedEvent());
-        viewModel.switchButtons();
     }
 
     @Override
