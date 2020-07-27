@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import com.elegion.tracktor.R;
 import com.elegion.tracktor.service.CounterService;
 import com.elegion.tracktor.ui.map.MainActivity;
+import com.elegion.tracktor.util.StringUtil;
 
 public class NotificationHelper {
 
@@ -90,7 +91,12 @@ public class NotificationHelper {
         }
     }
 
-    public void notify(int notificationId, Notification notification) {
+    public void notify(int notificationId, long totalSeconds, double distance, int requestCode) {
+        Notification notification
+                = buildNotification(
+                StringUtil.getTimeText(totalSeconds),
+                StringUtil.getDistanceText(distance),
+                requestCode);
         mNotificationManager.notify(notificationId, notification);
     }
 }
