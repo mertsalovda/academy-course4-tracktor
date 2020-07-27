@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (getIntent().getStringExtra("ACTION").equals("STOP")) {
-            new Handler().postDelayed(() -> EventBus.getDefault().post(new StopBtnClickedEvent()), 5000);
+            new Handler().postDelayed(() -> EventBus.getDefault().post(new StopBtnClickedEvent()), 1000);
             getIntent().removeExtra("ACTION");
             Toast.makeText(this, "STOP", Toast.LENGTH_SHORT).show();
         }

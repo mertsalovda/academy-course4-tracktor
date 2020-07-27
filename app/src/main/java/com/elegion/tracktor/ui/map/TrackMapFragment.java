@@ -36,7 +36,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -84,6 +83,7 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
         mMap = googleMap;
         mMap.setOnMapLoadedCallback(this::initMap);
         EventBus.getDefault().post(new GetRouteEvent());
+//        zoomRoute(mRoute);
     }
 
     private void initMap() {
@@ -143,6 +143,8 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
         mMap.clear();
         updateSettings();
         addMarker(event.getStartPosition(), getString(R.string.start), mStartMarker);
+        mRoute.add(event.getStartPosition());
+        zoomRoute(mRoute);
     }
 
     private void updateSettings() {
