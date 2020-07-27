@@ -51,6 +51,27 @@ public class NotificationHelper {
                 .build();
     }
 
+    public void notificationStoppedTrack(int notificationId, long totalSeconds, double distance) {
+        mNotificationBuilder = new NotificationCompat.Builder(mService, mChanelID)
+                .setContentIntent(getStopPendingIntent())
+                .setOngoing(true)
+                .setSmallIcon(R.drawable.ic_my_location_white_24dp)
+                .setWhen(System.currentTimeMillis())
+                .setContentTitle(mService.getString(R.string.route_active))
+                .setVibrate(new long[]{0})
+                .setColor(ContextCompat.getColor(mService, R.color.colorAccent));
+
+        String message = mService.getString(R.string.notify_info,
+                StringUtil.getTimeText(totalSeconds),
+                StringUtil.getDistanceText(distance)) + "\nОстановлен.";
+
+        Notification notification = mNotificationBuilder
+                .setContentText(message)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                .build();
+        mNotificationManager.notify(notificationId, notification);
+    }
+
     private void configureNotificationBuilder(int requestCode) {
         Intent notificationIntent = new Intent(mService, MainActivity.class);
         notificationIntent.setAction(Intent.ACTION_MAIN);
@@ -60,15 +81,6 @@ public class NotificationHelper {
         PendingIntent contentIntent = PendingIntent.getActivity(
                 mService, requestCode, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent stopIntent = new Intent(mService, MainActivity.class);
-        stopIntent.setAction(Intent.ACTION_MAIN);
-        stopIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        stopIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
-                | Intent.FLAG_ACTIVITY_NEW_TASK);
-        stopIntent.putExtra("ACTION", "STOP");
-        PendingIntent stopPendingIntent = PendingIntent.getActivity(
-                mService, CounterService.REQUEST_CODE_STOP, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         mNotificationBuilder = new NotificationCompat.Builder(mService, mChanelID)
                 .setContentIntent(contentIntent)
                 .setOngoing(true)
@@ -77,7 +89,18 @@ public class NotificationHelper {
                 .setContentTitle(mService.getString(R.string.route_active))
                 .setVibrate(new long[]{0})
                 .setColor(ContextCompat.getColor(mService, R.color.colorAccent))
-                .addAction(R.drawable.ic_baseline_stop_24, mService.getString(R.string.stop), stopPendingIntent);
+                .addAction(R.drawable.ic_baseline_stop_24, mService.getString(R.string.stop), getStopPendingIntent());
+    }
+
+    private PendingIntent getStopPendingIntent() {
+        Intent stopIntent = new Intent(mService, MainActivity.class);
+        stopIntent.setAction(Intent.ACTION_MAIN);
+        stopIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        stopIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
+                | Intent.FLAG_ACTIVITY_NEW_TASK);
+        stopIntent.putExtra("ACTION", "STOP");
+        return PendingIntent.getActivity(
+                mService, CounterService.REQUEST_CODE_STOP, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

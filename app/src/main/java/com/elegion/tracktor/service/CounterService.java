@@ -21,7 +21,6 @@ import com.elegion.tracktor.event.UpdateRouteEvent;
 import com.elegion.tracktor.event.UpdateTimerEvent;
 import com.elegion.tracktor.service.helpers.NotificationHelper;
 import com.elegion.tracktor.service.helpers.TrackHelper;
-import com.elegion.tracktor.util.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -89,12 +88,11 @@ public class CounterService extends Service {
         EventBus.getDefault().post(new UpdateTimerEvent(totalSeconds, mTrackHelper.getDistance()));
         mNotificationHelper.notify(NOTIFICATION_ID, totalSeconds, mTrackHelper.getDistance(), REQUEST_CODE_LAUNCH);
 
-        if (mShutDownDuration != -1 && totalSeconds == mShutDownDuration) {
+        if (mShutDownDuration != -1 && totalSeconds >= mShutDownDuration) {
+            mTimerDisposable.dispose();
+            mNotificationHelper.notificationStoppedTrack(NOTIFICATION_ID, totalSeconds, mTrackHelper.getDistance());
             EventBus.getDefault().post(new StopBtnClickedEvent());
-            //configure btns state
-            //from notification
         }
-
     }
 
     @Override
