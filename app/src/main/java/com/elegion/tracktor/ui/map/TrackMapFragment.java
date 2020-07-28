@@ -83,7 +83,6 @@ public class TrackMapFragment extends SupportMapFragment implements OnMapReadyCa
         mMap = googleMap;
         mMap.setOnMapLoadedCallback(this::initMap);
         EventBus.getDefault().post(new GetRouteEvent());
-//        zoomRoute(mRoute);
     }
 
     private void initMap() {

@@ -32,6 +32,8 @@ import static android.content.pm.PackageManager.PERMISSION_DENIED;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_LOCATION_STORAGE = 42;
+    private static final String ACTION_KEY = "ACTION";
+    private static final String ACTION_TYPE = "STOP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +50,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (getIntent().getStringExtra("ACTION") == null) {
+        if (getIntent().getStringExtra(ACTION_KEY) == null) {
             return;
         }
-        if (getIntent().getStringExtra("ACTION").equals("STOP")) {
+        if (getIntent().getStringExtra(ACTION_KEY).equals(ACTION_TYPE)) {
             new Handler().postDelayed(() -> EventBus.getDefault().post(new StopBtnClickedEvent()), 1000);
-            getIntent().removeExtra("ACTION");
-            Toast.makeText(this, "STOP", Toast.LENGTH_SHORT).show();
+            getIntent().removeExtra(ACTION_KEY);
         }
     }
 
