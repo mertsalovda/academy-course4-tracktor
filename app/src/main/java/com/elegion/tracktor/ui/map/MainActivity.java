@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             new Handler().postDelayed(() -> EventBus.getDefault().post(new StopBtnClickedEvent()), 1000);
             getIntent().removeExtra(ACTION_KEY);
         }
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
