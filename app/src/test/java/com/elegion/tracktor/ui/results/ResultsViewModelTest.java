@@ -54,7 +54,7 @@ public class ResultsViewModelTest {
 
         mResultsViewModel = new ResultsViewModel();
 
-        mResultsViewModel.getTracks().observeForever(mObserver);
+//        mResultsViewModel.getTracks().observeForever(mObserver);
     }
 
     @Test
