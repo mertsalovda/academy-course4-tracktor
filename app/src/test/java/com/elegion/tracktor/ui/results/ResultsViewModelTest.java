@@ -7,6 +7,7 @@ import com.elegion.tracktor.data.RealmRepository;
 import com.elegion.tracktor.data.model.Track;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -56,7 +57,7 @@ public class ResultsViewModelTest {
 
 //        mResultsViewModel.getTracks().observeForever(mObserver);
     }
-
+    @Ignore
     @Test
     public void checkObserverTriggeredOnChengedTest() {
         mResultsViewModel.loadTracks();

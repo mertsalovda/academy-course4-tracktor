@@ -3,9 +3,9 @@ package com.elegion.tracktor.util;
 
 import org.junit.Test;
 
-class DistanceConverterTest {
+public class DistanceConverterTest {
 
     @Test
-    void formatDistance() {
+    public void formatDistance() {
     }
 }

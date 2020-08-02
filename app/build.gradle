@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
-
+apply from: '../jacoco.gradle'
+//apply plugin: 'jacoco'
+//jacoco {
+//    toolVersion = '0.8.5'
+//}
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -15,7 +19,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ toothpick_registry_package_name : 'com.elegion.tracktor' ]
+                arguments = [toothpick_registry_package_name: 'com.elegion.tracktor']
             }
         }
     }
@@ -24,11 +28,21 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            testCoverageEnabled = true
+        }
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
     }
 }
 
@@ -49,7 +63,6 @@ dependencies {
     implementation 'io.realm:android-adapters:3.1.0'
 
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
@@ -97,4 +110,20 @@ dependencies {
     testImplementation "android.arch.core:core-testing:1.1.1"
 
     implementation 'org.greenrobot:eventbus:3.1.1'
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom files([mainSrc])
+    classDirectories.setFrom files([debugTree])
+    executionData.setFrom fileTree(dir: project.projectDir, includes: ['**/*.exec', '**/*.ec'])
 }
