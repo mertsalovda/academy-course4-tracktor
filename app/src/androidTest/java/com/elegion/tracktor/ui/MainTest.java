@@ -1,4 +1,4 @@
-package com.elegion.tracktor.ui.map;
+package com.elegion.tracktor.ui;
 
 import android.content.Intent;
 import android.os.SystemClock;
@@ -9,6 +9,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.RecyclerView;
 
 import com.elegion.tracktor.R;
+import com.elegion.tracktor.ui.map.MainActivity;
 import com.elegion.tracktor.ui.results.ResultsActivity;
 
 import org.junit.Rule;
@@ -30,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class MainTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mMainActivityActivityTestRule = new ActivityTestRule<>(MainActivity.class);
